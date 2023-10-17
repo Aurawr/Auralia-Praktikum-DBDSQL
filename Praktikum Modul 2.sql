@@ -2,37 +2,38 @@ create database MODUL2;
 
 USE MODUL2;
 
-create table MOVIE(
+create schema pnjualandvd;
+create table penjualandvd.MOVIE(
 	KODE_DVD VARCHAR(10) not null primary key,
 	JUDUL VARCHAR(60),
 	HARGA_SEWA DOUBLE,
 	DENDA DOUBLE,
-	TAHUN_RILIS SMALLINT
+	TAHUN_RILIS smallint
 );
-create table GENRE(
+create table penjualandvd.GENRE(
 	ID_GENRE smallint not null primary key,
 	GENRE VARCHAR(45)
 );
-create table GENRE_MOVIE(
+create table penjualandvd.GENRE_MOVIE(
 	ID_GENRE smallint,
 	KODE_DVD VARCHAR(10),
 	foreign key(ID_GENRE) references GENRE(ID_GENRE),
 	foreign key(KODE_DVD) references MOVIE(KODE_DVD),
 	primary key(ID_GENRE, KODE_DVD)
 );
-create table KECAMATAN(
+create table penjualandvd.KECAMATAN(
 	ID_KECAMATAN smallint not null primary key,
 	KECAMATAN VARCHAR(45) not null
 );
 
-create table KELURAHAN(
+create table penjualandvd.KELURAHAN(
 	ID_KELURAHAN smallint not null primary key,
 	ID_KECAMATAN smallint,
 	KELURAHAN VARCHAR(45) not null,
 	foreign key(ID_KECAMATAN) references KECAMATAN(ID_KECAMATAN)
 );
 
-create table PELANGGAN(
+create table penjualandvd.PELANGGAN(
 	KODE_PELANGGAN VARCHAR(10) not null primary key,
 	ID_KELURAHAN smallint,
 	NAMA VARCHAR(45) not null,
@@ -41,13 +42,14 @@ create table PELANGGAN(
 	foreign key(ID_KELURAHAN) references KELURAHAN(ID_KELURAHAN)
 );
 
-create table KONTAK_PELANGGAN(
+create table penjualandvd.KONTAK_PELANGGAN(
 	NO_HP VARCHAR(25),
 	KODE_PELANGGAN VARCHAR(10),
-	foreign key(KODE_PELANGGAN) references PELANGGAN(KODE_PELANGGAN)
+	foreign key(KODE_PELANGGAN) references PELANGGAN(KODE_PELANGGAN),
+	unique (NO_HP)
 );
 
-create table TRANSAKSI(
+create table penjualandvd.TRANSAKSI(
 	KODE_DVD VARCHAR(10),
 	KODE_PELANGGAN VARCHAR(10),
 	TANGGAL_SEWA DATE,
